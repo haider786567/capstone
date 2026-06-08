@@ -1,5 +1,5 @@
-import app from "../app.js";
 import { k8sCoreV1Api } from "./config.js";
+
 
 export const createService = async (sandboxId) => {
     const serviceManifest = {
@@ -12,7 +12,7 @@ export const createService = async (sandboxId) => {
         },
         spec: {
             selector: {
-                app:'sandbox',
+                app: 'sandbox',
                 sandboxId: sandboxId
             },
             ports: [
@@ -22,6 +22,12 @@ export const createService = async (sandboxId) => {
                     targetPort: 5173,
                     protocol: "TCP"
                 },
+                {
+                    name: "agent-http",
+                    port: 3000,
+                    targetPort: 3000,
+                    protocol: "TCP"
+                }
             ],
             type: "ClusterIP"
         }
