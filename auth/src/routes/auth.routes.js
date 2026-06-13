@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import User from "../models/user.model.js";
+import { sendAuthNotification } from "../config/mq.js";
 const router = Router();
 
 router.get('/google', passport.authenticate('google', { 
@@ -15,6 +16,13 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 
         let user = await User.findOne({ googleId: id });
         console.log(user);
+
+        await sendAuthNotification({ 
+            userId: user._id,
+            action:'google_login',
+            timestamp: new Date(),
+            emails: emails[0].value
+         });
         
         if (!user) {
             user = new User({ googleId: id, name: displayName, email: emails[0].value, avatar: photos[0].value });
