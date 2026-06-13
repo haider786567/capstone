@@ -23,7 +23,7 @@ passport.use(new GoogleStrategy({
     callbackURL: '/api/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
     // In a real app, you'd save the user to your database here
-    return done(null, { id: profile.id, displayName: profile.displayName });
+    return done(null,profile);
 }));
 
 

@@ -65,5 +65,5 @@ spec:
               key: RABBITMQ_URL
         ports:
         - containerPort:  3000
-          name:  notification-port
+          name:  noti-port
        
